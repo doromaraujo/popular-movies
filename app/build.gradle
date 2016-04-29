@@ -14,12 +14,15 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField 'String', 'THEMOVIEDB_API_KEY', 'YOUR_API_KEY'
+            buildConfigField 'String', 'THEMOVIEDB_API_KEY', 'fd8039095bb7bf266113404f4abf2063'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        repositories {
+            mavenCentral()
         }
     }
 }
@@ -29,4 +32,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
