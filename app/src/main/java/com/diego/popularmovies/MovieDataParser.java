@@ -1,5 +1,7 @@
 package com.diego.popularmovies;
 
+import android.net.Uri;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +14,19 @@ import java.util.List;
  */
 public class MovieDataParser
 {
+    private static String formatMoviePosterPath(String moviePosterPath)
+    {
+        Uri.Builder builder = new Uri.Builder();
+
+        builder.authority("image.tmdb.org")
+                .scheme("http")
+                .appendPath("t")
+                .appendPath("p")
+                .appendPath("w185");
+
+        return String.format("%s/%s", builder.build().toString(), moviePosterPath);
+    }
+
     public static List<String> getMoviePosterPathsFromJSON(String jsonData) throws JSONException
     {
         List<String> moviePosterPaths = new ArrayList<>();
@@ -25,11 +40,15 @@ public class MovieDataParser
         JSONArray results = root.getJSONArray("results");
         JSONObject movieInfo;
 
+        String moviePosterPath;
+
         for (int i = 0; i < results.length(); ++i)
         {
             movieInfo = results.getJSONObject(i);
 
-            moviePosterPaths.add(movieInfo.getString("poster_path"));
+            moviePosterPath = movieInfo.getString("poster_path");
+
+            moviePosterPaths.add(formatMoviePosterPath(moviePosterPath));
         }
 
         return moviePosterPaths;

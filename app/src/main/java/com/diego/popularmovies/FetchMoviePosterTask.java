@@ -18,13 +18,20 @@ import java.util.List;
 /**
  * Created by diego on 29/04/2016.
  */
-public class FetchMoviePosterPathTask extends AsyncTask<Void, Void, List<String>>
+public class FetchMoviePosterTask extends AsyncTask<Void, Void, List<String>>
 {
-    private final String LOG_TAG = FetchMoviePosterPathTask.class.getSimpleName();
+    private final String LOG_TAG = FetchMoviePosterTask.class.getSimpleName();
 
     private String getMoviesSortOrderPreference()
     {
         return "popular";
+    }
+
+    private MoviePosterHandler moviePosterHandler = null;
+
+    public FetchMoviePosterTask(MoviePosterHandler moviePosterHandler)
+    {
+        this.moviePosterHandler = moviePosterHandler;
     }
 
     @Override
@@ -124,5 +131,11 @@ public class FetchMoviePosterPathTask extends AsyncTask<Void, Void, List<String>
         }
 
         return posterPaths;
+    }
+
+    @Override
+    protected void onPostExecute(List<String> data)
+    {
+        this.moviePosterHandler.setMoviePosterData(data);
     }
 }

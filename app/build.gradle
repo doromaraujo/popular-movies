@@ -14,13 +14,16 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField 'String', 'THEMOVIEDB_API_KEY', 'fd8039095bb7bf266113404f4abf2063'
+            buildConfigField 'String', 'THEMOVIEDB_API_KEY', TheMovieDBAPIKey
         }
 
         release {
+            buildConfigField 'String', 'THEMOVIEDB_API_KEY', TheMovieDBAPIKey
+
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile 'proguard-rules.pro'
         }
+
         repositories {
             mavenCentral()
         }
