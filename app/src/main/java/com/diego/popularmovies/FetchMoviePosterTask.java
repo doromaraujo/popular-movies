@@ -24,7 +24,7 @@ public class FetchMoviePosterTask extends AsyncTask<Void, Void, List<String>>
 
     private String getMoviesSortOrderPreference()
     {
-        return "popular";
+        return this.moviePosterHandler.getMovieOrderPreference();
     }
 
     private MoviePosterHandler moviePosterHandler = null;

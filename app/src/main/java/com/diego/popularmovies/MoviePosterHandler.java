@@ -8,4 +8,6 @@ import java.util.List;
 public interface MoviePosterHandler
 {
     void setMoviePosterData(List<String> data);
+
+    String getMovieOrderPreference();
 }

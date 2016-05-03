@@ -1,6 +1,8 @@
 package com.diego.popularmovies;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,17 @@ public class MainActivityFragment extends Fragment implements MoviePosterHandler
 
         moviePostersGridView.setAdapter(this.imageAdapter);
 
+        moviePostersGridView.setOnItemClickListener(new OnItemClickListener(this.getContext()));
+
         return rootView;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        new FetchMoviePosterTask(this).execute();
     }
 
     public void setMoviePosterData(List<String> data)
@@ -45,5 +57,19 @@ public class MainActivityFragment extends Fragment implements MoviePosterHandler
 
             this.imageAdapter.addAll(data);
         }
+    }
+
+    public String getMovieOrderPreference()
+    {
+        String movieOrderPreference = null;
+
+        SharedPreferences settings = PreferenceManager
+                .getDefaultSharedPreferences(this.getContext());
+
+        movieOrderPreference = settings.getString(
+                this.getString(R.string.preferences_movies_sort_order_key),
+                this.getString(R.string.preferences_movies_value_popular));
+
+        return movieOrderPreference;
     }
 }
