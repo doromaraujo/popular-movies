@@ -5,9 +5,9 @@ import java.util.List;
 /**
  * Created by diego on 02/05/2016.
  */
-public interface MoviePosterHandler
+public interface MovieSummariesHandler
 {
-    void setMoviePosterData(List<String> data);
+    void setMovieSummaries(List<Movie> data);
 
     String getMovieOrderPreference();
 }

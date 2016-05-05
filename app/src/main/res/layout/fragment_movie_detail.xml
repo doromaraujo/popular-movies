@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.diego.popularmovies.MovieDetailActivityFragment"
+    tools:showIn="@layout/activity_movie_detail"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/detail_movie_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="The Death and Rebirth of Evangelion"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:layout_gravity="center_vertical"
+        android:background="@color/movieTitleBackgroud"
+        android:textColor="@color/movieTitleForeground"
+        android:maxHeight="48dp"
+        android:textSize="16sp">
+    </TextView>
+
+    <LinearLayout
+        android:paddingTop="8dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/detail_movie_thumbnail_image_view"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/movie_thumbnail">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/detail_movie_release_date_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/grayText"
+                tools:text="1987">
+            </TextView>
+
+            <TextView
+                android:id="@+id/detail_movie_duration_text_view"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/grayText"
+                android:textStyle="italic"
+                tools:text="89min">
+            </TextView>
+
+            <TextView
+                android:id="@+id/detail_movie_rating_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/blackText"
+                tools:text="11/10">
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/detail_movie_overview_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="GET IN THE FUCKING ROBOT, SHINJI!"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@color/grayText"
+        android:layout_gravity="fill_horizontal"
+        android:maxHeight="48dp"
+        android:textSize="16sp"
+        android:ellipsize="none"
+        android:scrollHorizontally="false">
+    </TextView>
+
+</LinearLayout>

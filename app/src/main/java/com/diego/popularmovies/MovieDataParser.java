@@ -1,12 +1,15 @@
 package com.diego.popularmovies;
 
-import android.net.Uri;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -14,43 +17,79 @@ import java.util.List;
  */
 public class MovieDataParser
 {
-    private static String formatMoviePosterPath(String moviePosterPath)
+    private static Movie createMovieFromJSONObject(JSONObject movieInfo) throws JSONException
+            , ParseException
     {
-        Uri.Builder builder = new Uri.Builder();
+        final String ID = "id"
+                , POSTER_PATH = "poster_path"
+                , OVERVIEW = "overview"
+                , TITLE = "title"
+                , RELEASE_DATE = "release_date"
+                , VOTE_AVERAGE = "vote_average"
+                , RUNTIME = "runtime";
 
-        builder.authority("image.tmdb.org")
-                .scheme("http")
-                .appendPath("t")
-                .appendPath("p")
-                .appendPath("w185");
 
-        return String.format("%s/%s", builder.build().toString(), moviePosterPath);
+        int id;
+        String posterPath;
+        String title;
+        String overview;
+
+        Calendar releaseDate;
+        Double voteAverage;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        id = movieInfo.getInt(ID);
+        posterPath = movieInfo.getString(POSTER_PATH);
+        overview = movieInfo.getString(OVERVIEW);
+        title = movieInfo.getString(TITLE);
+
+        releaseDate = GregorianCalendar.getInstance();
+        releaseDate.setTime(dateFormat.parse(movieInfo.getString(RELEASE_DATE)));
+
+        voteAverage = movieInfo.getDouble(VOTE_AVERAGE);
+
+        Movie movie = new Movie(id, posterPath, overview, releaseDate, title, voteAverage);
+
+        if (movieInfo.has(RUNTIME))
+        {
+            movie.setRuntime(movieInfo.getInt(RUNTIME));
+        }
+
+        return movie;
     }
 
-    public static List<String> getMoviePosterPathsFromJSON(String jsonData) throws JSONException
+    public static Movie createMovieFromJSON(String jsonData)  throws JSONException, ParseException
     {
-        List<String> moviePosterPaths = new ArrayList<>();
+        JSONObject movieInfo = new JSONObject(jsonData);
+
+        return createMovieFromJSONObject(movieInfo);
+    }
+
+    public static List<Movie> createMoviesFromJSON(String jsonData) throws JSONException
+            , ParseException
+    {
+        List<Movie> movies = new ArrayList<>();
 
         if (jsonData == null || jsonData.isEmpty())
         {
-            return moviePosterPaths;
+            return movies;
         }
 
         JSONObject root = new JSONObject(jsonData);
         JSONArray results = root.getJSONArray("results");
         JSONObject movieInfo;
 
-        String moviePosterPath;
+        Movie movie;
 
         for (int i = 0; i < results.length(); ++i)
         {
             movieInfo = results.getJSONObject(i);
 
-            moviePosterPath = movieInfo.getString("poster_path");
+            movie = createMovieFromJSONObject(movieInfo);
 
-            moviePosterPaths.add(formatMoviePosterPath(moviePosterPath));
+            movies.add(movie);
         }
 
-        return moviePosterPaths;
+        return movies;
     }
 }

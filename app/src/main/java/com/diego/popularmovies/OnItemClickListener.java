@@ -1,11 +1,9 @@
 package com.diego.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 /**
  * Created by diego on 02/05/2016.
@@ -26,10 +24,23 @@ public class OnItemClickListener implements AdapterView.OnItemClickListener
         {
             case R.id.movie_poster_list_item_image_view:
 
-                String message = String.format(Locale.getDefault()
-                        , "Clicked on position %d!", position);
+                //Movie movie = (Movie)view.getTag();
 
-                Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show();
+//                int currentHeight = view.getHeight();
+//                int currentWidth = view.getWidth();
+
+                Movie movie = (Movie)parent.getAdapter().getItem(position);
+
+                Intent intent = new Intent(this.context, MovieDetailActivity.class)
+                        .putExtra("movie", movie)
+                        .putExtra("position", position);
+
+                this.context.startActivity(intent);
+
+//                String message = String.format(Locale.getDefault()
+//                        , "Clicked on position %d for movie \"%s\"!", position, movie.getTitle());
+//
+//                Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show();
 
                 break;
         }

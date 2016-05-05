@@ -15,15 +15,15 @@ import java.util.List;
 /**
  * Created by diego on 29/04/2016.
  */
-public class ImageAdapter extends BaseAdapter
+public class MovieAdapter extends BaseAdapter
 {
-    private final String LOG_TAG = ImageAdapter.class.getSimpleName();
+    private final String LOG_TAG = MovieAdapter.class.getSimpleName();
 
     private Context context;
-    private List<String> data = new ArrayList<>();
+    private List<Movie> data = new ArrayList<>();
     private LayoutInflater inflater = null;
 
-    public ImageAdapter(Context context)
+    public MovieAdapter(Context context)
     {
         this.context = context;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +52,7 @@ public class ImageAdapter extends BaseAdapter
         this.data.clear();
     }
 
-    public void addAll(List<String> data)
+    public void addAll(List<Movie> data)
     {
         this.data.addAll(data);
         this.notifyDataSetChanged();
@@ -81,11 +81,18 @@ public class ImageAdapter extends BaseAdapter
 
         if (position < this.data.size())
         {
-            String imageUrl = this.data.get(position);
+            Movie movie = this.data.get(position);
+
+            String imageUrl = movie.getPosterPath();
+
+            //imageView.setTag(movie);
 
             //Log.i(this.LOG_TAG, builder.build().toString());
 
-            Picasso.with(this.context).load(imageUrl).into(imageView);
+            Picasso picasso = Picasso.with(this.context);
+
+            //picasso.setIndicatorsEnabled(true);
+            picasso.load(imageUrl).into(imageView);
         }
         return imageView;
     }

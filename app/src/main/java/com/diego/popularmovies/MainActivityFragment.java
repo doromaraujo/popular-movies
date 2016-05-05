@@ -14,20 +14,20 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements MoviePosterHandler
+public class MainActivityFragment extends Fragment implements MovieSummariesHandler
 {
-    private ImageAdapter imageAdapter = null;
+    private MovieAdapter imageAdapter = null;
 
     public MainActivityFragment()
     {
-        new FetchMoviePosterTask(this).execute();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        this.imageAdapter = new ImageAdapter(this.getContext());
+        this.imageAdapter = new MovieAdapter(this.getContext());
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -46,10 +46,10 @@ public class MainActivityFragment extends Fragment implements MoviePosterHandler
     {
         super.onResume();
 
-        new FetchMoviePosterTask(this).execute();
+        new FetchMovieSummariesTask(this).execute();
     }
 
-    public void setMoviePosterData(List<String> data)
+    public void setMovieSummaries(List<Movie> data)
     {
         if (data != null)
         {
@@ -71,5 +71,13 @@ public class MainActivityFragment extends Fragment implements MoviePosterHandler
                 this.getString(R.string.preferences_movies_value_popular));
 
         return movieOrderPreference;
+    }
+
+    public void setMovieDataInGridView(Movie movie, int position)
+    {
+        GridView moviePostersGridView =
+                (GridView)this.getActivity().findViewById(R.id.movie_poster_grid_view);
+
+        ((Movie)moviePostersGridView.getAdapter().getItem(position)).setRuntime(movie.getRuntime());
     }
 }
